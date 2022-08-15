@@ -12,10 +12,10 @@ task:
     cpu: 7
     memory: 28G
 
-  Environment-Check_background_script:
+  Environment-Chek_background_script:
      - cat /etc/os* && env && nproc && gcc --version && clang --version
   
-  Load-Ccache_background_script:
+  Load-Ccache_bacground_script:
      - cd $WORKDIR
      - mkdir -p ~/.config/rclone
      - echo "$rcloneconfig" > ~/.config/rclone/rclone.conf
@@ -24,10 +24,10 @@ task:
      - tar xzf ccache.tar.gz
      - rm -rf ccache.tar.gz
 
-  Storage-Check_background_script:
+  Storage-Check_backgound_script:
      - df -h && lsblk && ls -l -a -h && nproc
 
-  Sync-rom_script:
+  Sync-ro_script:
      - set -exv
      - name_rom=$(grep init $CIRRUS_WORKING_DIR/build.sh -m 1 | cut -d / -f 4)
      - mkdir -p $WORKDIR/rom/$name_rom
@@ -69,7 +69,7 @@ task:
 
      
      
-  Build-rom_script:
+  Build-om_script:
      - set -e
      - name_rom=$(grep init $CIRRUS_WORKING_DIR/build.sh -m 1 | cut -d / -f 4)
      - device=$(grep unch $CIRRUS_WORKING_DIR/build.sh -m 1 | cut -d ' ' -f 2 | cut -d _ -f 2 | cut -d - -f 1)
@@ -89,12 +89,12 @@ task:
      - command=$(tail $CIRRUS_WORKING_DIR/build.sh -n +$(expr $(grep 'build/envsetup.sh' $CIRRUS_WORKING_DIR/build.sh -n | cut -f1 -d:) - 1)| head -n -1 | grep -v '# upload rom')
      - bash -c "$command"
      
-  Ccache-info_script:
+  Ccache-ino_script:
      - set -e
      - export CCACHE_DIR=$WORKDIR/ccache
      - ccache -s
 
-  Upload-build_script:
+  Upload-buld_script:
      - cd $CIRRUS_WORKING_DIR
      - chmod u+r+x ziping.sh
      - ./ziping.sh
